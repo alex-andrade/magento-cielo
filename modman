@@ -1,5 +1,5 @@
 ## Modman Module Cielo Payment
-app/code/community/Query/*                       app/code/community/Query/
+app/code/community/Brainup/*                     app/code/community/Brainup/
 app/design/adminhtml/default/default/template/*  app/design/adminhtml/default/default/template/
 app/design/frontend/default/default/layout/*     app/design/frontend/default/default/layout/
 app/design/frontend/default/default/template/*   app/design/frontend/default/default/template/
