@@ -1,34 +1,4 @@
-<?php
 
-/*
- * Query Commerce Cielo Module - payment method module for Magento,
- * integrating the billing forms with a Cielo's gateway Web Service.
- * Copyright (C) 2013  Fillipe Almeida Dutra
- * Belo Horizonte, Minas Gerais - Brazil
- * 
- * Contact: lawsann@gmail.com
- * Project link: http://code.google.com/p/magento-cielo/
- * Group discussion: http://groups.google.com/group/cielo-magento
- * 
- * Team: 
- * Fillipe Almeida Dutra - lawsann@gmail.com
- * Hermes Luciano Monteiro Junior - hermeslmj@gmail.com
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-?>
 <?php
 	$baseUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . "frontend/default/default/images/cielo/";
 ?>
@@ -68,7 +38,7 @@
 </style>
 
 <fieldset class="form-list">
-	<ul id="payment_form_Query_Cielo_Dc" style="display:none;">
+	<ul id="payment_form_Brainup_Cielo_Dc" style="display:none;">
 		<br />
 	
 <?php
@@ -115,7 +85,7 @@
 		<div id='card-data-dc'>
 		<input name="payment[dc_type]" 
 			   type="hidden"
-			   id="query-cielo-dc-type"
+			   id="brainup-cielo-dc-type"
 			   class="required-entry" />
 <?php
 		}
@@ -174,7 +144,7 @@
 		<li class="card-data-form">
 			<label for="cielo-dc-card_owner_doc" class="required"><em>*</em><?php echo $this->__('Owner Document') ?></label>
 			<div class="input-box">
-				<input type="text" title="<?php echo $this->__('Owner Document') ?>" class="input-text required-entry" id="cielo-dc-card_owner_doc" name="payment[dc_owner_doc]" value="" autocomplete="off" onblur="return querySetCieloDcMask(event);" onkeydown="return queryCieloDcMask(event);">
+				<input type="text" title="<?php echo $this->__('Owner Document') ?>" class="input-text required-entry" id="cielo-dc-card_owner_doc" name="payment[dc_owner_doc]" value="" autocomplete="off" onblur="return brainupSetCieloDcMask(event);" onkeydown="return brainupCieloDcMask(event);">
 			</div>
 		</li>
 	</div>

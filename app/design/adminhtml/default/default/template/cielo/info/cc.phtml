@@ -1,34 +1,4 @@
-<?php
 
-/*
- * Query Commerce Cielo Module - payment method module for Magento,
- * integrating the billing forms with a Cielo's gateway Web Service.
- * Copyright (C) 2013  Fillipe Almeida Dutra
- * Belo Horizonte, Minas Gerais - Brazil
- * 
- * Contact: lawsann@gmail.com
- * Project link: http://code.google.com/p/magento-cielo/
- * Group discussion: http://groups.google.com/group/cielo-magento
- * 
- * Team: 
- * Fillipe Almeida Dutra - lawsann@gmail.com
- * Hermes Luciano Monteiro Junior - hermeslmj@gmail.com
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-?>
 <?php echo $this->__("Credit Card"); ?>
 <br /><br />
 <?php
@@ -54,13 +24,13 @@
 				$arp = $payment->getAdditionalInformation('Cielo_arp');
 				$authorization = $payment->getAdditionalInformation('Cielo_lr');
 				
-				$allCards = Mage::getModel('Query_Cielo/cc_types')->toArray();
+				$allCards = Mage::getModel('Brainup_Cielo/cc_types')->toArray();
 				$cardType = isset($allCards[$cardType]) ? $allCards[$cardType] : "";
 				$installments = ($installments == 1) ? 'à vista' : $installments . " vezes";
 				
 				$html  = "<table style='width: 100%''>";
 				$html .= "		<tr><td><b>" . $this->__("Transaction") . "</b>:</td><td>" . $tid . "</td></tr>";
-				$html .= "		<tr><td><b>" . $this->__("Status") . "</b>:</td><td>" .  Mage::helper('Query_Cielo')->getStatusMessage($status) . "</td></tr>";
+				$html .= "		<tr><td><b>" . $this->__("Status") . "</b>:</td><td>" .  Mage::helper('Brainup_Cielo')->getStatusMessage($status) . "</td></tr>";
 				$html .= "		<tr><td><b>" . $this->__("Authorization") . "</b>:</td><td>" .  $this->getAuthorizationCodeLabel($authorization) . "</td></tr>";				
 				$html .= "		<tr><td><b>" . $this->__("ARP") . "</b>:</td><td>" . $arp . "</td></tr>";
 				$html .= "		<tr><td><b>" . $this->__("NSU") . "</b>:</td><td>" . $nsu . "</td></tr>";
@@ -82,7 +52,7 @@
 	
 	function captureCieloOrder(tid, orderId)
 	{
-		var url = '<?php echo $this->getUrl('querycielo/admin/capture') ?>';
+		var url = '<?php echo $this->getUrl('brainupCielo/admin/capture') ?>';
 		
 		new Ajax.Request(url,
 		{
@@ -90,7 +60,7 @@
 			parameters	: "tid=" + tid + "&order=" + orderId,
 			onComplete	: function(transport)
 			{
-				queryModalWindow("Captura de Dados", transport.responseText, 600, 400);
+				brainupModalWindow("Captura de Dados", transport.responseText, 600, 400);
 			}
 		});
 	}
@@ -98,7 +68,7 @@
 	
 	function loadCieloWebServiceData(tid, orderId)
 	{
-		var url = '<?php echo $this->getUrl('querycielo/admin/consult') ?>';
+		var url = '<?php echo $this->getUrl('brainupCielo/admin/consult') ?>';
 		
 		new Ajax.Request(url,
 		{
@@ -106,7 +76,7 @@
 			parameters	: "tid=" + tid + "&order=" + orderId,
 			onComplete	: function(transport)
 			{
-				queryModalWindow("Dados Cielo", transport.responseText, 600, 400);
+				brainupModalWindow("Dados Cielo", transport.responseText, 600, 400);
 			}
 		});
 	}
@@ -118,7 +88,7 @@
 		
 		if(cancellation)
 		{
-			var url = '<?php echo $this->getUrl('querycielo/admin/cancel') ?>';
+			var url = '<?php echo $this->getUrl('brainupCielo/admin/cancel') ?>';
 			
 			new Ajax.Request(url,
 			{
@@ -126,14 +96,14 @@
 				parameters	: "tid=" + tid + "&order=" + orderId,
 				onComplete	: function(transport)
 				{
-					queryModalWindow("Cancelamento na Cielo", transport.responseText, 600, 400);
+					brainupModalWindow("Cancelamento na Cielo", transport.responseText, 600, 400);
 				}
 			});
 		}
 	}
 	
 	
-	function queryModalWindow(title, content, width, height)
+	function brainupModalWindow(title, content, width, height)
 	{
 		$$('HTML')[0].setStyle({overflow: 'hidden'});
 		
@@ -152,7 +122,7 @@
 		
 		// mascara que cobre o fundo da tela
 		var mask = document.createElement("div");
-		mask.id = 'query-page-mask';
+		mask.id = 'brainup-page-mask';
 		mask.setStyle
 		({
 			'width'					: viewport.getWidth() + "px",
@@ -168,7 +138,7 @@
 		
 		// janela modal
 		var modalWindow = document.createElement("div");
-		modalWindow.id = 'query-modal-window';
+		modalWindow.id = 'brainup-modal-window';
 		$(modalWindow).setStyle
 		({
 			'width'					: styleWidth,

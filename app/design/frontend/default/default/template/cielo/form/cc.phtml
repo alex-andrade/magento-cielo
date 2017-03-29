@@ -1,34 +1,4 @@
-<?php
 
-/*
- * Query Commerce Cielo Module - payment method module for Magento,
- * integrating the billing forms with a Cielo's gateway Web Service.
- * Copyright (C) 2013  Fillipe Almeida Dutra
- * Belo Horizonte, Minas Gerais - Brazil
- * 
- * Contact: lawsann@gmail.com
- * Project link: http://code.google.com/p/magento-cielo/
- * Group discussion: http://groups.google.com/group/cielo-magento
- * 
- * Team: 
- * Fillipe Almeida Dutra - lawsann@gmail.com
- * Hermes Luciano Monteiro Junior - hermeslmj@gmail.com
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-?>
 <?php
 	$baseUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . "frontend/default/default/images/cielo/";
 ?>
@@ -70,7 +40,7 @@
 
 <fieldset class="form-list">
 	
-	<ul id="payment_form_Query_Cielo_Cc" style="display:none;">
+	<ul id="payment_form_Brainup_Cielo_Cc" style="display:none;">
 	<br>
 
 <?php
@@ -98,7 +68,7 @@
 								   type="radio" 
 								   value="<?php echo $token['cc_type'] . '/' . $token['id']; ?>" 
 								   id="card-<?php echo $token['id']; ?>-tk" 
-								   onclick="queryCieloUpdateInstallments('<?php echo $token["cc_type"]; ?>','<?php echo $cardsMaxInstallments[$token["cc_type"]]; ?>'); showCardDataCc(false); unlockRequiredFields();"
+								   onclick="brainupCieloUpdateInstallments('<?php echo $token["cc_type"]; ?>','<?php echo $cardsMaxInstallments[$token["cc_type"]]; ?>'); showCardDataCc(false); unlockRequiredFields();"
 								   class="validate-one-required-by-name"
 								   style="margin-top: 3px;">
 						</td>
@@ -133,7 +103,7 @@
 	<div id='card-data-cc'>
 		<input name="payment[cc_type]" 
 			   type="hidden"
-			   id="query-cielo-cc-type"
+			   id="brainup-cielo-cc-type"
 			   class="required-entry">
 <?php
 
@@ -160,13 +130,13 @@
 ?>
 			<li style="width: 70px; float: left;">
 				<label for="card-<?php echo $type; ?>">
-					<img class="card-type-image" ccType="<?php echo $type; ?>" src="<?php echo $img; ?>" title="<?php echo $label; ?>" onclick="selectCardTypeCc(this); queryCieloUpdateInstallments('<?php echo $type; ?>','<?php echo $cardsMaxInstallments[$type]; ?>')"><br>
+					<img class="card-type-image" ccType="<?php echo $type; ?>" src="<?php echo $img; ?>" title="<?php echo $label; ?>" onclick="selectCardTypeCc(this); brainupCieloUpdateInstallments('<?php echo $type; ?>','<?php echo $cardsMaxInstallments[$type]; ?>')"><br>
 					<!--
 					<input name="payment[cc_type]" 
 						   type="radio"
 						   value="<?php echo $type; ?>"
 						   id="card-<?php echo $type; ?>"
-						   onclick="queryCieloUpdateInstallments('<?php echo $type; ?>')"
+						   onclick="brainupCieloUpdateInstallments('<?php echo $type; ?>')"
 						   style="display: none;"
 						   class="validate-one-required-by-name">
 					-->
@@ -246,7 +216,7 @@
 		<li class="card-data-form">
 			<label for="cielo-cc-card_owner_doc" class="required"><em>*</em><?php echo $this->__('Owner Document') ?></label>
 			<div class="input-box">
-				<input type="text" title="<?php echo $this->__('Owner Document') ?>" class="input-text required-entry" id="cielo-cc-card_owner_doc" name="payment[cc_owner_doc]" value="" autocomplete="off" onblur="return querySetCieloCcMask(event);" onkeydown="return queryCieloCcMask(event);">
+				<input type="text" title="<?php echo $this->__('Owner Document') ?>" class="input-text required-entry" id="cielo-cc-card_owner_doc" name="payment[cc_owner_doc]" value="" autocomplete="off" onblur="return brainupSetCieloCcMask(event);" onkeydown="return brainupCieloCcMask(event);">
 			</div>
 		</li>
 	</div>
