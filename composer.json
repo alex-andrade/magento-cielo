@@ -3,6 +3,7 @@
     "type": "magento-module",
     "description": "This module integrates Magento with a Cielo payment gateway, without intermediator payment gateway, making the taxes less expensive",
     "require": {
-        "magento-hackathon/magento-composer-installer": "*"
+        "magento-hackathon/magento-composer-installer": "*",
+        "brainup/API-3.0-PHP": "*"
     }
 }
