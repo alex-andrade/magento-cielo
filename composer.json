@@ -1,4 +1,5 @@
 {
+  "minimum-stability": "dev",
   "repositories":
   [
     {
@@ -13,7 +14,7 @@
 
   "require": {
     "magento-hackathon/magento-composer-installer": "*",
-    "developercielo/api-3.0-php": "*"
+    "developercielo/api-3.0-php": "dev-master"
   }
 
 }
