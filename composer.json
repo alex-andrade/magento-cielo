@@ -3,18 +3,9 @@
   "repositories":
   [
     {
-      "type": "package",
-      "package": {
-        "name": "developercielo/api-3.0-php",
-        "version": "dev-master",
-        "source": {
-          "url": "https://github.com/brainup/API-3.0-PHP",
-          "type": "git",
-          "reference": "origin/master"
-        }
-      }
+      "type": "vcs",
+      "url": "https://github.com/brainup/API-3.0-PHP"
     }
-
   ],
 
   "name": "brainup/magento-cielo",
@@ -23,7 +14,7 @@
 
   "require": {
     "magento-hackathon/magento-composer-installer": "*",
-    "developercielo/api-3.0-php": "dev-master#92550fee37e85bbcb33cd46323576c48dcddb5a8"
+    "developercielo/api-3.0-php": "dev-master"
   }
 
 }
