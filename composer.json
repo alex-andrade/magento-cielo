@@ -6,10 +6,10 @@
     "magento-hackathon/magento-composer-installer": "*",
     "developercielo/api-3.0-php": "dev-bugfix"
   },
-  "repositories": {
-    "api-3.0-php": {
+  "repositories": [
+    {
       "type": "vcs",
       "url": "https://github.com/brainup/API-3.0-PHP"
     }
-  }
+  ]
 }
