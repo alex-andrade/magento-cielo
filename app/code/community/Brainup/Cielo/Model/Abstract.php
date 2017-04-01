@@ -1,5 +1,13 @@
 <?php
 
+use Cielo\API30\Merchant;
+use Cielo\API30\Ecommerce\Environment;
+use Cielo\API30\Ecommerce\Sale;
+use Cielo\API30\Ecommerce\CieloEcommerce;
+use Cielo\API30\Ecommerce\Payment;
+use Cielo\API30\Ecommerce\Customer;
+use Cielo\API30\Ecommerce\Request\CieloRequestException;
+
 class Brainup_Cielo_Model_Abstract extends Mage_Payment_Model_Method_Abstract
 {
 	public function consultRequest($order)
@@ -11,41 +19,60 @@ class Brainup_Cielo_Model_Abstract extends Mage_Payment_Model_Method_Abstract
 		$cieloNumber 		= Mage::getStoreConfig('payment/' . $methodCode . '/cielo_number');
 		$cieloKey 			= Mage::getStoreConfig('payment/' . $methodCode . '/cielo_key');
 		$environment		= Mage::getStoreConfig('payment/' . $methodCode . '/environment');
-		$sslFile			= Mage::getStoreConfig('payment/' . $methodCode . '/ssl_file');
-		
-		$model = Mage::getModel('Brainup_Cielo/webServiceOrder', array('enderecoBase' => $environment, 'caminhoCertificado' => $sslFile));
-		
+
 		if($order->getPayment()->getAdditionalInformation('Cielo_tid'))
 		{
-			$model->tid = $order->getPayment()->getAdditionalInformation ('Cielo_tid');
-			$model->cieloNumber = $cieloNumber;
-			$model->cieloKey = $cieloKey;
-			
-			$model->requestConsultation();
-			$xml = $model->getXmlResponse();
+            //get payment id
+            $paymentId = $order->getPayment()->getAdditionalInformation ('Cielo_tid');
 
-			if(isset($xml->status))
-			{
-				$payment->setAdditionalInformation('Cielo_status', (string) $xml->status);
-				$payment->save();
-			}
+            try {
+                //Set enviroment
+                $environment = Environment::sandbox();
+                if($environment == 'production') Environment::production();
+
+                //create cielo merchant connect
+                $merchant = new Merchant($cieloNumber, $cieloKey);
+
+                //consulting sale data
+                $sale = (new CieloEcommerce($merchant, $environment))->getSale($paymentId);
+
+            } catch (CieloRequestException $e) {
+                throw $e;
+            }
+
+            //update payment with cielo data
+            if($sale->getPayment()->getStatus())
+            {
+                $payment->setAdditionalInformation('Cielo_status', (string) $sale->getPayment()->getStatus());
+                $payment->save();
+            }
+
 		}
 		else 
 		{
-			$quote = Mage::getModel('sales/quote')->loadByIdWithoutStore($order->getQuoteId());
-			
-			$model->clientOrderNumber = $quote->getPayment()->getPaymentId();
-			$model->cieloNumber = $cieloNumber;
-			$model->cieloKey = $cieloKey;
-			
-			$model->requestConsultationByStoreId();
-			$xml = $model->getXmlResponse();
-			
-			$eci = (isset($xml->autenticacao->eci)) ? ((string) $xml->autenticacao->eci) : "";
-			$tid = (string) $xml->tid;
-			$type =  (string) $xml->{'forma-pagamento'}->bandeira;
-			$parcels = (string) $xml->{'forma-pagamento'}->parcelas;
-			$status = (string) $xml->status;
+            $quote = Mage::getModel('sales/quote')->loadByIdWithoutStore($order->getQuoteId());
+            $paymentId = $quote->getPayment()->getPaymentId();
+
+            try {
+                //Set enviroment
+                $environment = Environment::sandbox();
+                if($environment == 'production') Environment::production();
+
+                //create cielo merchant connect
+                $merchant = new Merchant($cieloNumber, $cieloKey);
+
+                //consulting sale data
+                $sale = (new CieloEcommerce($merchant, $environment))->getSale($paymentId);
+
+            } catch (CieloRequestException $e) {
+                throw $e;
+            }
+
+			$eci = (string) $sale->getPayment()->getEci();
+			$tid = (string) $sale->getPayment()->getTid();
+			$type =  (string) $sale->getPayment()->getType();
+			$parcels = (string) $sale->getPayment()->getInstallments();
+			$status = (string) $sale->getPayment()->getStatus();
 			
 			$payment->setAdditionalInformation('Cielo_tid', $tid);
 			$payment->setAdditionalInformation('Cielo_cardType', $type);
@@ -55,7 +82,7 @@ class Brainup_Cielo_Model_Abstract extends Mage_Payment_Model_Method_Abstract
 			$payment->save();
 		}
 
-		return $xml;
+		return json_encode($sale);
 	}
 
 
