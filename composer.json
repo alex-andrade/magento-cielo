@@ -3,9 +3,18 @@
   "repositories":
   [
     {
-      "type": "vcs",
-      "url": "https://github.com/brainup/API-3.0-PHP"
+      "type": "package",
+      "package": {
+        "name": "developercielo/api-3.0-php",
+        "version": "dev-master",
+        "source": {
+          "url": "https://github.com/brainup/API-3.0-PHP",
+          "type": "git",
+          "reference": "origin/master"
+        }
+      }
     }
+
   ],
 
   "name": "brainup/magento-cielo",
