@@ -23,7 +23,7 @@
 
   "require": {
     "magento-hackathon/magento-composer-installer": "*",
-    "developercielo/api-3.0-php": "dev-master"
+    "developercielo/api-3.0-php": "dev-master#92550fee37e85bbcb33cd46323576c48dcddb5a8"
   }
 
 }
